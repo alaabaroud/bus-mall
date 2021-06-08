@@ -132,3 +132,23 @@ function showlist() {
     }
     btn.hidden=true;
 }
+
+// Mixed Chart Types With Chart.js, it is possible to create mixed charts that are a combination of two or more different chart types. A common example is a bar chart that also includes a line dataset.
+
+function chart (){
+    let mixedChart = new Chart(ctx, {
+        data: {
+            datasets: [{
+                type: productName,
+                label: votes,
+                data: votes
+            }, {
+                type: productName,
+                label: views,
+                data: views,
+            }],
+            labels: [productName]
+        },
+        options: options
+    });
+}
