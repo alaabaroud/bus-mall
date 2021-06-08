@@ -24,15 +24,40 @@ function product(productName, filePath){
     this.views=0;
    proname.push(this.productName);
    
-
+  
     product.allProduct.push(this);
 
+    updateStorage();
+
+}
+    product.allProduct=[];
+
+    function updateStorage(){
+        let string=JSON.stringify(product.allProduct)
+        localStorage.setItem('product', string);
+    
+    };
+
+
+
+
+
+    function getProductsData (){
+        let data=localStorage.getItem('product');
+
+        let productData=JSON.parse(data);
+        console.log(data);
+        if (productData!==null) {
+        product.allProduct=productData;
+        }
+    
+    }
+    
+
+  
     
 
 
-}
-
-product.allProduct=[];
 
 
 new product('bag','img/bag.jpg');
@@ -60,6 +85,7 @@ new product('wine-glass', 'img/wine-glass.jpg');
 
 //console.log(product.allProduct);
 
+
 function generateRandomIndex() {
     return Math.floor(Math.random() * product.allProduct.length); 
 }
@@ -86,7 +112,7 @@ function render() {
     product.allProduct[firstimgIndex].views++;
     product.allProduct[secondimgIndex].views++;
     product.allProduct[thirdimgIndex].views++;
-console.log(product.allProduct[thirdimgIndex].views);
+//console.log(product.allProduct[thirdimgIndex].views);
 }
 
 
@@ -139,6 +165,8 @@ function showlist() {
     }
     btn.hidden=true;
 }
+
+
 
 
 let ctx = document.getElementById('myChart').getContext('2d');
@@ -197,4 +225,9 @@ let myChart = new Chart(ctx, {
         }
     }
 });
+ 
 
+
+
+
+getProductsData();
