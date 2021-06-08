@@ -11,16 +11,19 @@ let thirdimgIndex;
 let attempts= 25;
 let userAttempts =0;
 
-let name=[];
+
 let vote=[];
 let seen= [];
+let proname=[];
+
 
 function product(productName, filePath){
     this.productName=productName;
     this.filePath=filePath;
     this.votes=0;
     this.views=0;
-    name.push(this.productName);
+   proname.push(this.productName);
+   
 
     product.allProduct.push(this);
 
@@ -28,9 +31,9 @@ function product(productName, filePath){
 
 
 }
-console.log(name);
+
 product.allProduct=[];
-console.log(product.allProduct);
+
 
 new product('bag','img/bag.jpg');
 new product('banana','img/banana.jpg');
@@ -61,13 +64,17 @@ function generateRandomIndex() {
     return Math.floor(Math.random() * product.allProduct.length); 
 }
 
+
+viewedpics=[];
+viewedpics.push(firstimgIndex, secondimgIndex, thirdimgIndex);
 function render() {
     firstimgIndex=generateRandomIndex();
     secondimgIndex=generateRandomIndex();
     thirdimgIndex=generateRandomIndex();
     
-    while (firstimgIndex===secondimgIndex || firstimgIndex===thirdimgIndex || secondimgIndex===thirdimgIndex) {
+    while (firstimgIndex===secondimgIndex || firstimgIndex===thirdimgIndex || secondimgIndex===thirdimgIndex ||viewedpics.includes(firstimgIndex)||viewedpics.includes(secondimgIndex)||viewedpics.includes(thirdimgIndex)) {
     firstimgIndex=generateRandomIndex();
+    secondimgIndex=generateRandomIndex();
     thirdimgIndex=generateRandomIndex();
 }
         
@@ -133,22 +140,61 @@ function showlist() {
     btn.hidden=true;
 }
 
-// Mixed Chart Types With Chart.js, it is possible to create mixed charts that are a combination of two or more different chart types. A common example is a bar chart that also includes a line dataset.
 
-function chart (){
-    let mixedChart = new Chart(ctx, {
-        data: {
-            datasets: [{
-                type: productName,
-                label: votes,
-                data: votes
-            }, {
-                type: productName,
-                label: views,
-                data: views,
-            }],
-            labels: [productName]
+let ctx = document.getElementById('myChart').getContext('2d');
+let myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: proname,
+        datasets: [{
+            label: '# of Votes',
+            data: vote,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
         },
-        options: options
-    });
-}
+        {
+            label: '# of Votes',
+            data: seen,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
